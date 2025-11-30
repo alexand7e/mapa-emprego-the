@@ -267,32 +267,6 @@ def process_csv_with_coordinates_optimized(input_csv, output_csv):
     return df
 
 
-def create_sample_data():
-    """
-    Cria dados de exemplo para testes
-    """
-    sample_ceps = [
-        '64000000', '64001480', '64004650', '64017280', '64010120',
-        '64023225', '64055400', '64048232', '64049110', '64055280'
-    ]
-    
-    data = []
-    for cep in sample_ceps:
-        for ano in [2004, 2023]:
-            data.append({
-                'id_municipio': '2211001',
-                'cep': cep,
-                'quantidade_vinculos_ativos': np.random.randint(10, 200),
-                'ano': ano
-            })
-    
-    df = pd.DataFrame(data)
-    output_path = Path(__file__).parent / "sample_ceps.csv"
-    df.to_csv(output_path, index=False)
-    print(f"Dados de exemplo criados: {output_path}")
-    return output_path
-
-
 if __name__ == "__main__":
     # Caminhos
     repo_root = Path(__file__).resolve().parents[1]
@@ -304,5 +278,5 @@ if __name__ == "__main__":
     else:
         print(f"Arquivo não encontrado: {input_csv}")
         print("Criando dados de exemplo...")
-        sample_path = create_sample_data()
-        process_csv_with_coordinates_optimized(sample_path, output_csv)
+        # sample_path = create_sample_data()
+        # process_csv_with_coordinates_optimized(sample_path, output_csv)

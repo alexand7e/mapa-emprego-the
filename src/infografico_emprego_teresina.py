@@ -8,7 +8,7 @@ Este script gera mapas de emprego formal por bairro em Teresina usando:
 - Shapefile de bairros de Teresina
 - Geocodificação de CEPs para coordenadas precisas
 
-Autor: Sistema de Análise de Dados
+Autor: Alexandre
 Data: 2025
 """
 
@@ -25,7 +25,7 @@ from shapely.geometry import Point
 # Configurações principais - Estilo dark theme inspirado no R
 CONFIG = {
     "municipio_ibge": "2211001",  # Código IBGE de Teresina
-    "anos_analise": [2004, 2023],
+    "anos_analise": [2023],
     "escala_pontos": 1000,  # 1 ponto = 1000 vínculos
     "cores": {
         "fundo": "#404044",      # Cinza escuro do R
@@ -37,7 +37,7 @@ CONFIG = {
         "legenda": "#effae6"     # Texto da legenda
     },
     "labels_destaque": {
-        2004: ["CENTRO", "DIRCEU ARCOVERDE"],
+        # 2004: ["CENTRO", "DIRCEU ARCOVERDE"],
         2023: ["FATIMA", "DIRCEU ARCOVERDE"]
     },
     "fonte": {
@@ -70,7 +70,7 @@ class ProcessadorRAIS:
         
     def carregar_dados(self) -> tuple[pd.DataFrame, gpd.GeoDataFrame]:
         """Carrega dados RAIS e shapefile"""
-        print("📊 Carregando dados...")
+        print("Carregando dados...")
         
         # Carrega dados RAIS com coordenadas
         df = pd.read_csv(self.dados_path)
@@ -112,7 +112,7 @@ class ProcessadorRAIS:
     
     def atribuir_bairros(self, df: pd.DataFrame, shp: gpd.GeoDataFrame) -> pd.DataFrame:
         """Atribui cada CEP ao seu bairro correspondente"""
-        print("\n🗺️  Atribuindo CEPs aos bairros...")
+        print("\n  Atribuindo CEPs aos bairros...")
         
         # Cria pontos geográficos em WGS84 (coordenadas dos CEPs)
         geometry = [Point(lon, lat) for lon, lat in zip(df['longitude'], df['latitude'])]
@@ -137,7 +137,7 @@ class ProcessadorRAIS:
     
     def agregar_dados(self, df: pd.DataFrame) -> pd.DataFrame:
         """Agrega dados por bairro e ano"""
-        print("\n📈 Agregando dados...")
+        print("\n Agregando dados...")
         
         resultado = df.groupby(['bairro_nome', 'ano']).agg({
             'quantidade_vinculos_ativos': 'sum',
@@ -231,7 +231,7 @@ class ProcessadorRAIS:
     
     def gerar_mapa_com_grafico(self, df: pd.DataFrame, df_agg: pd.DataFrame, shp: gpd.GeoDataFrame, ano: int, output_path: Path):
         """Gera mapa com gráfico de barras integrado no canto inferior esquerdo"""
-        print(f"\n🗺️  Gerando mapa com gráfico para {ano}...")
+        print(f"\n  Gerando mapa com gráfico para {ano}...")
         
         # Prepara dados do mapa
         dados_mapa = shp.merge(
@@ -329,7 +329,7 @@ class ProcessadorRAIS:
                                weight='bold',
                                ha='center')
         except Exception as e:
-            print(f"   ⚠️  Erro ao adicionar gráfico: {e}")
+            print(f"     Erro ao adicionar gráfico: {e}")
         
         # Adiciona labels dos 5 maiores bairros
         top5 = df_agg[df_agg['ano'] == ano].nlargest(5, 'quantidade_vinculos_ativos')
@@ -338,8 +338,8 @@ class ProcessadorRAIS:
             bairro_data = dados_mapa[dados_mapa['bairro'] == nome]
             if not bairro_data.empty and bairro_data['quantidade_vinculos_ativos'].iloc[0] > 0:
                 centroid = bairro_data.geometry.centroid.iloc[0]
-                vinculos = int(bairro_data['quantidade_vinculos_ativos'].iloc[0])
-                percentual = float(bairro_data['percentual'].iloc[0])
+                # vinculos = int(bairro_data['quantidade_vinculos_ativos'].iloc[0])
+                # percentual = float(bairro_data['percentual'].iloc[0])
                 label_text = f"{nome.title()}" #f"{nome.title()}\n{vinculos:,} ({percentual:.1f}%)"
                 ax_mapa.text(
                     centroid.x, centroid.y,
@@ -398,14 +398,14 @@ class ProcessadorRAIS:
     
     def gerar_grafico_barras(self, df_agg: pd.DataFrame, ano: int, output_path: Path):
         """Gera gráfico de barras estilo R para o ano específico"""
-        print(f"📊 Gerando gráfico de barras para {ano}...")
+        print(f" Gerando gráfico de barras para {ano}...")
         
         # Prepara dados - top 5 bairros
         dados_ano = df_agg[df_agg['ano'] == ano].nlargest(5, 'quantidade_vinculos_ativos')
         
         # Verifica se há dados válidos
         if len(dados_ano) == 0 or dados_ano['percentual'].sum() == 0:
-            print(f"   ⚠️  Nenhum dado válido para {ano}, pulando gráfico")
+            print(f"     Nenhum dado válido para {ano}, pulando gráfico")
             return
         
         # Cria figura com estilo dark theme
@@ -460,7 +460,7 @@ class ProcessadorRAIS:
     
     def gerar_relatorio(self, df_agg: pd.DataFrame, output_path: Path):
         """Gera relatório estatístico"""
-        print("\n📊 Gerando relatório...")
+        print("\n Gerando relatório...")
         
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write("RELATÓRIO DE EMPREGO FORMAL - TERESINA/PI\n")
@@ -486,7 +486,7 @@ class ProcessadorRAIS:
     
     def executar(self):
         """Executa o processamento completo"""
-        print("🚀 Iniciando processamento de dados RAIS...")
+        print("Iniciando processamento de dados RAIS...")
         print("=" * 50)
         
         # Carrega dados
@@ -511,8 +511,8 @@ class ProcessadorRAIS:
         self.gerar_relatorio(df_agg, relatorio_path)
         
         print("\n" + "=" * 50)
-        print("✅ Processamento concluído com sucesso!")
-        print(f"📁 Arquivos salvos em: {output_dir}")
+        print("Processamento concluído com sucesso!")
+        print(f"Arquivos salvos em: {output_dir}")
 
 
 def main():
@@ -533,7 +533,7 @@ def main():
     
     for arquivo in arquivos_necessarios:
         if not arquivo.exists():
-            print(f"❌ Arquivo não encontrado: {arquivo}")
+            print(f"Arquivo não encontrado: {arquivo}")
             return
     
     # Executa processamento
