@@ -1,0 +1,16 @@
+RELATÓRIO DE EMPREGO FORMAL - TERESINA/PI
+==================================================
+
+ANO 2023:
+--------------------
+Total de vínculos: 323,435
+Número de bairros: 114
+Média por bairro: 2837
+
+Top 5 bairros:
+  1. Centro: 62,419 (19.3%)
+  2. São Pedro: 37,590 (11.6%)
+  3. Extrema: 36,454 (11.3%)
+  4. Fátima: 17,246 (5.3%)
+  5. Jóquei: 14,195 (4.4%)
+
