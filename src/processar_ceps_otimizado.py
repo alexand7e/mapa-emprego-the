@@ -296,8 +296,8 @@ def create_sample_data():
 if __name__ == "__main__":
     # Caminhos
     repo_root = Path(__file__).resolve().parents[1]
-    input_csv = repo_root / "bquxjob_4debdb75_19ad4877d50.csv"
-    output_csv = repo_root / "ceps_com_coordenadas_otimizado.csv"
+    input_csv = repo_root / "data" / "empregos_rais.csv"
+    output_csv = repo_root / "data" / "ceps_com_coordenadas_otimizado.csv"
     
     if input_csv.exists():
         process_csv_with_coordinates_optimized(input_csv, output_csv)
