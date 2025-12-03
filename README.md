@@ -2,7 +2,7 @@ Mapa do Emprego Formal em Teresina (RAIS)
 =========================================
 
 Projeto aberto voltado para aprendizado em economia e análise espacial do mercado de trabalho.
-Usa dados da RAIS para visualizar a distribuição de empregos formais por CEP e por bairro em Teresina/PI.
+Usa dados da RAIS para visualizar a distribuição de empregos formais por CEP e por bairro em Teresina/PI. Agora também inclui a visualização por Zonas SDU da Prefeitura.
 
 Objetivos
 ---------
@@ -12,8 +12,9 @@ Objetivos
 
 Estrutura do Projeto
 --------------------
-- `data/`: arquivos de dados (RAIS, shapefile de bairros e caches de CEP).
-  - `BAIRROS_2013.shp` (+ arquivos auxiliares `.cpg/.dbf/.prj/.shx`).
+- `data/`: arquivos de dados (RAIS, shapefiles e caches de CEP).
+  - `bairros/BAIRROS_2013.shp` (+ `.cpg/.dbf/.prj/.shx`).
+  - `sdu/Divisao SDUs.shp` (+ `.cpg/.dbf/.prj/.shx`).
   - `empregos_rais.csv`.
   - `ceps_com_coordenadas_otimizado.csv` (gerado pelo pipeline).
 - `src/`: scripts principais em Python.
@@ -50,6 +51,8 @@ Saída
 -----
 - `output/mapa_emprego_teresina_2023.png`: mapa com dispersão real dos CEPs e gráfico dos top 5 bairros.
 - `output/relatorio_emprego_teresina.txt`: estatísticas por ano e por bairro.
+- `output/mapa_emprego_teresina_sdu_2023.png`: mapa por Zonas SDU com gráfico dos top 5 zonas.
+- `output/relatorio_emprego_teresina_sdu.txt`: estatísticas por ano e por Zona SDU.
 
 Resultados Recentes
 -------------------
@@ -65,6 +68,14 @@ Relatório detalhado:
 
 - [output/relatorio_emprego_teresina.txt](output/relatorio_emprego_teresina.txt)
 
+Zonas SDU (2023):
+
+![Mapa de empregos formais por Zonas SDU 2023](output/mapa_emprego_teresina_sdu_2023.png)
+
+Relatório Zonas SDU:
+
+- [output/relatorio_emprego_teresina_sdu.txt](output/relatorio_emprego_teresina_sdu.txt)
+
 Metodologia (resumo)
 --------------------
 - RAIS: soma de vínculos ativos por bairro e por ano.
@@ -72,7 +83,13 @@ Metodologia (resumo)
 - Visualização:
   - Tamanho e transparência dos pontos proporcional ao número de empregos por CEP.
   - Redução de sobreposição em CEPs com muitos empregos.
-  - Gráfico de barras com os 5 bairros de maior emprego.
+- Gráfico de barras com os 5 bairros de maior emprego.
+  - Para SDU: gráfico com as 5 zonas de maior emprego.
+
+Fontes dos mapas
+----------------
+- Shapefile de Bairros: base municipal (BAIRROS_2013).
+- Zonas SDU: `data/sdu/Divisao SDUs.shp` — fonte: https://drive.google.com/drive/folders/1oDUOT92kbHTb1gKor9vHOpjAZgK_O_lK
 
 Uso Educacional
 ---------------
