@@ -1,0 +1,16 @@
+RELATÓRIO DE EMPREGO FORMAL - ZONAS SDU (TERESINA/PI)
+==================================================
+
+ANO 2023:
+--------------------
+Total de vínculos: 323,476
+Número de zonas SDU: 5
+Média por zona: 64695
+
+Top 5 zonas SDU:
+  1. Sdu Centro: 99,124 (30.6%)
+  2. Sdu Leste: 83,623 (25.9%)
+  3. Sdu Sul: 78,864 (24.4%)
+  4. Sdu Sudeste: 53,446 (16.5%)
+  5. Sdu Norte: 8,419 (2.6%)
+
